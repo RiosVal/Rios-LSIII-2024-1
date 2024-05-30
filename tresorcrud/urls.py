@@ -22,4 +22,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
 
+    #Expenses
+    path('expenses/', views.expenses, name='expenses'),
+    path('expenses/create/', views.create_expense, name='create_expense'),    
+    path('expenses/<int:expense_id>/', views.expense_detail, name='expense_detail'),
+    path('expenses/<int:expense_id>/delete', views.delete_expense, name='delete_expense'),
 ]

@@ -13,3 +13,53 @@ from .forms import IncomeForm, ExpenseForm
 
 def home(request):
     return render(request, 'home.html')
+
+def expenses(request):
+    expenses = Expenses.objects.filter(user=request.user)
+    return render(request, 'Expenses/expenses.html', {'expenses': expenses})
+
+def expense_detail(request, expense_id):    #actualizar expense
+    if request.method == 'GET':
+        expense = get_object_or_404(Expenses, pk=expense_id, user=request.user)
+        form = ExpenseForm(instance=expense)
+        return render(request, 'Expenses/expense_detail.html',{
+            'expense': expense,
+            'form': form
+        })
+    else:
+        try:
+            expense = get_object_or_404(Expenses, pk=expense_id, user=request.user)
+            form = ExpenseForm(request.POST, instance=expense)
+            form.save()
+            return redirect('expenses')
+        except ValueError:
+            return render(request, 'MonthlyIncome/income_detail.html',{
+                'expense': expense,
+                'form': form,
+                'error': 'Error updating expense'
+            })  
+
+def create_expense(request):
+    if request.method == 'GET':
+        return render(request, "Expenses/create_expense.html", {
+            'form': ExpenseForm
+        })
+    else:
+        try:
+            form = ExpenseForm(request.POST)
+            print(form)
+            new_expense = form.save(commit=False)
+            new_expense.user = request.user
+            new_expense.save()
+            return redirect('expenses')
+        except ValueError:
+            return render(request, "Expenses/create_expense.html", {
+                'form': ExpenseForm,
+                'error': 'Please provide valid data'
+            })
+
+def delete_expense(request, expense_id):
+    expense = get_object_or_404(Expenses, pk=expense_id, user=request.user)
+    if request.method == 'POST':
+        expense.delete()
+        return redirect('expenses')

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h1>Expense detail</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Update</button>
+</form>
+
+<form action="{% url 'delete_expense' expense.id %}" method="POST">
+    {% csrf_token %}
+    <button>Delete</button>
+</form>
+
+
+{% endblock %}
