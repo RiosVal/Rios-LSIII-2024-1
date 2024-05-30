@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django CRUD Application</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        :root{
+            --verde-uno: #256023;
+            --verde-dos: #184017;
+            --verde-tres: #0c200b;
+        }
+
+        .btn-primario {
+            background-color: var(--verde-uno);
+            border-color: var(--verde-dos);
+            color: white;
+        }
+
+        .btn-primario:hover {
+            background-color: #427f40;
+            color: white;
+        }
+
+        .btn-secundario {
+            background-color: var(--verde-dos);
+            border-color: var(--verde-dos);
+            color: white;
+        }
+
+        .btn-secundario:hover {
+            background-color: #3a523a;
+            color: white;
+        }
+
+        .titulo-primario {
+            color: var(--verde-tres);
+            border-color: none;
+            background-color: white;
+        }
+
+        .titulo-secundario {
+            color: var(--verde-dos);
+            border-color: none;
+            background-color: white;
+        }
+
+        .titulo-terciario {
+            color: var(--verde-uno);
+            border-color: none;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+    
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/income">Monthly Income</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/expenses">Expenses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/savings">Projected Savings</a>
+                    </li>                
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signout">Logout</a>
+                    </li class="nav-item">
+                {% else %} 
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">Signup</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signin">Log In</a>
+                    </li>
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    
+    {% block content %}
+    {% endblock %}
+
+</body>
+<blockquote class="blockquote mb-0 container text-center">
+    <footer class="blockquote-footer">Tresor footer</footer>
+  </blockquote>
+</html>
