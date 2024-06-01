@@ -37,4 +37,10 @@ urlpatterns = [
     #Savings
     path('savings/', views.savings, name='savings'),
 
+    #Income
+    path('income/', views.income, name='income'),
+    path('income/create/', views.create_income, name='create_income'),
+    path('income/<int:income_id>/', views.income_detail, name='income_detail'),
+    path('income/<int:income_id>/delete', views.delete_income, name='delete_income'),
+
 ]

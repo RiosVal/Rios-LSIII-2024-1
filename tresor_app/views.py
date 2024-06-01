@@ -118,3 +118,52 @@ def signout(request):
 
 def savings(request):
     return render(request, 'Savings/savings.html')
+
+def income(request):
+    incomes = MonthlyIncome.objects.filter(user=request.user)
+    return render(request, 'MonthlyIncome/income.html', {'incomes': incomes})
+
+def create_income(request):
+    if request.method == 'GET':
+        return render(request, "MonthlyIncome/create_income.html", {
+            'form': IncomeForm
+        })
+    else:
+        try:
+            form = IncomeForm(request.POST)
+            new_task = form.save(commit=False)
+            new_task.user = request.user
+            new_task.save()
+            return redirect('income')
+        except ValueError:
+            return render(request, "MonthlyIncome/create_income.html", {
+                'form': IncomeForm,
+                'error': 'Please provide valid data'
+            })
+
+def income_detail(request, income_id):    #actualizar income
+    if request.method == 'GET':
+        income = get_object_or_404(MonthlyIncome, pk=income_id, user=request.user)
+        form = IncomeForm(instance=income)
+        return render(request, 'MonthlyIncome/income_detail.html',{
+            'income': income,
+            'form': form
+        })
+    else:
+        try:
+            income = get_object_or_404(MonthlyIncome, pk=income_id, user=request.user)
+            form = IncomeForm(request.POST, instance=income)
+            form.save()
+            return redirect('income')
+        except ValueError:
+            return render(request, 'MonthlyIncome/income_detail.html',{
+                'income': income,
+                'form': form,
+                'error': 'Error updating income'
+            })  
+
+def delete_income(request, income_id):
+    income = get_object_or_404(MonthlyIncome, pk=income_id, user=request.user)
+    if request.method == 'POST':
+        income.delete()
+        return redirect('income')
