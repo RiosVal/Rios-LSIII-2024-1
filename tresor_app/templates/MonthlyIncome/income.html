@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h1>Monthly Income</h1>
+<p>
+    Here you can list all the incomes you have every month, if you only have one income that´s okay,
+    you can list only one income and that will be added to your total income.
+</p>
+
+<ul>
+    {% for income in incomes %}
+        <li>
+            <a href="{% url 'income_detail' income.id %}">
+                <div>
+                    <strong>${{income.amount}}</strong>
+                    <p>{{income.currency}}</p>
+                </div>
+                
+
+                <p>{{income.income_origin}}</p>
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
+<h3>Total Income $:0.00</h3>
+
+<a href="/income/create">Add New Income</a>
+
+{% endblock %}

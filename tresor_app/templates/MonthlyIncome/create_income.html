@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Create Income</h1>
+
+<form action="/income/create/" method="POST">
+    {% csrf_token %}
+
+    {{error}}
+    {{form}}
+
+    <button>Save</button>
+
+</form>
+
+{% endblock %}
