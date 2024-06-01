@@ -116,3 +116,5 @@ def signout(request):
     logout(request)
     return redirect('home')
 
+def savings(request):
+    return render(request, 'Savings/savings.html')

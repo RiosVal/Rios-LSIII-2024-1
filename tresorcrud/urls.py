@@ -34,4 +34,7 @@ urlpatterns = [
     path('signout/', views.signout, name='signout'),
     path('signin/', views.signin, name='signin'),
 
+    #Savings
+    path('savings/', views.savings, name='savings'),
+
 ]
